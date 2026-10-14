@@ -5,5 +5,6 @@ export default tseslint.config(
   { ignores: [".next/**", "coverage/**", "playwright-report/**", "test-results/**", "next-env.d.ts"] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
+  { files: ["scripts/**/*.mjs"], languageOptions: { globals: { Buffer: "readonly", console: "readonly", process: "readonly" } } },
   { files: ["**/*.{ts,tsx}"], rules: { "@typescript-eslint/no-explicit-any": "error", "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }] } }
 );

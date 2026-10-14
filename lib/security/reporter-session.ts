@@ -1,0 +1,5 @@
+import { createHmac, timingSafeEqual } from "node:crypto";
+export type ReporterSession = { caseId: string; exp: number };
+const mac = (key: string, payload: string) => createHmac("sha256", Buffer.from(key, "base64")).update(`reporter-session-v1\0${payload}`).digest();
+export function createReporterSession(caseId: string, encodedKey: string, expiresAt = Date.now() + 30 * 60_000) { const payload = Buffer.from(JSON.stringify({ caseId, exp: expiresAt })).toString("base64url"); return `${payload}.${mac(encodedKey, payload).toString("base64url")}`; }
+export function verifyReporterSession(token: string, encodedKey: string): ReporterSession | null { try { const [payload, signature, extra] = token.split("."); if (!payload || !signature || extra) return null; const expected = mac(encodedKey, payload); const actual = Buffer.from(signature, "base64url"); if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) return null; const value = JSON.parse(Buffer.from(payload, "base64url").toString()) as ReporterSession; return typeof value.caseId === "string" && value.exp > Date.now() ? value : null; } catch { return null; } }

@@ -6,7 +6,7 @@ Implemented: architecture, threat model, data model migration, initial role matr
 
 ## M1 — foundation
 
-Implemented: Next.js strict TypeScript, accessible responsive UI, hosted passwordless Auth, AAL2 fail-closed gate, organisations/members/categories schema, RLS, CI and demo gating. Pending: operator provisioning console and deployed Supabase integration evidence.
+Implemented: Next.js strict TypeScript, accessible responsive UI, hosted passwordless Auth, TOTP enrolment and challenge, database enforced AAL2 access, organisations/members/categories schema, dual operator organisation verification, RLS, CI and demo gating. Pending: deployed Supabase integration evidence and operator interface polish.
 
 ## M2 — reporter flow
 
@@ -14,11 +14,11 @@ Implemented in code: four-step validated flow, atomic database RPC, AES-GCM enve
 
 ## M3 — officer portal
 
-Implemented: MFA and RLS gates, grant-scoped queue/detail, encrypted content rendering, team/settings/audit/retention views. Pending: genuine mutation workflows for messages, notes, assignments, conflict dual control, status and close/reopen. These are not marked complete.
+Implemented: MFA and RLS gates, grant scoped queue and detail, encrypted content rendering, officer and reporter messages, private notes, controlled transitions, resolution, close and reopen, assignment, conflict self removal, two person restriction approval, legal holds, audit and retention views. Case mutations and their audit entries commit in one database transaction. Pending: live multi role integration evidence.
 
 ## M4/M5
 
-Implemented: public policy baseline, retention records, runbooks, headers, CSP, redaction helper, CI/CodeQL/Dependabot and core tests. Pending: exports, automated retention, cryptographic audit-chain writer/verifier, real backup drill, accessibility/manual tests, dependency/secret scan review, penetration review and production rehearsal.
+Implemented: version marked legal drafts, evidence register, retention jobs and legal holds, authenticated operator deletion with content free tombstones, password encrypted case export, cryptographic audit chain writing and verification, authenticated encrypted backup tooling, runbooks, headers, CSP, redaction helper, CI, CodeQL, Dependabot, and core tests. Pending: counsel approval, a real isolated restore drill, live database integration, accessibility manual review, secret scan review, independent penetration review, and production rehearsal.
 
 ## M6
 

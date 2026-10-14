@@ -5,6 +5,7 @@ import { getConfig } from "@/lib/config";
 import { trackSchema } from "@/lib/validation/case";
 import { verifySecret } from "@/lib/security/crypto";
 import { hasValidOrigin } from "@/lib/security/csrf";
+import { createReporterSession } from "@/lib/security/reporter-session";
 
 const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const generic = () => NextResponse.json({ error: "Unable to verify" }, { status: 401, headers: { "cache-control": "no-store" } });
@@ -27,10 +28,8 @@ export async function POST(req: NextRequest) {
     const valid = data && !locked && verifySecret(parsed.data.reference, parsed.data.secret, data.verifier_hmac, c.CASE_SECRET_PEPPER);
     if (!valid) { if (data) await db.rpc("record_failed_recovery", { p_case_id: data.case_id }); throw new Error("denied"); }
     await db.from("case_access_credentials").update({ failed_attempt_count: 0, lockout_until: null }).eq("case_id", data.case_id);
-    const payload = Buffer.from(JSON.stringify({ caseId: data.case_id, exp: Date.now() + 30 * 60_000 })).toString("base64url");
-    const signature = hmac(c.CASE_SECRET_PEPPER, "reporter-session-v1", payload);
     const response = NextResponse.json({ ok: true }, { headers: { "cache-control": "no-store" } });
-    response.cookies.set("wz_reporter_session", `${payload}.${signature}`, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict", path: "/track", maxAge: 1800 });
+    response.cookies.set("wz_reporter_session", createReporterSession(data.case_id, c.CASE_SECRET_PEPPER), { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict", path: "/track", maxAge: 1800 });
     return response;
   } catch { await pause(Math.max(0, 300 - (Date.now() - started))); return generic(); }
 }

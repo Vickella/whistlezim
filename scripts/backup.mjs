@@ -1,0 +1,21 @@
+import { createCipheriv, createHash, randomBytes, scryptSync } from "node:crypto";
+import { createReadStream, createWriteStream, promises as fs } from "node:fs";
+import { basename, resolve } from "node:path";
+import { spawn } from "node:child_process";
+
+const destination = process.argv[2] && resolve(process.argv[2]);
+if (!destination || !process.env.DATABASE_URL || !process.env.BACKUP_PASSPHRASE) throw new Error("Destination, DATABASE_URL, and BACKUP_PASSPHRASE are required");
+const repository = resolve(process.cwd());
+if (destination === repository || destination.startsWith(`${repository}\\`) || destination.startsWith(`${repository}/`)) throw new Error("Backups must be outside the repository");
+await fs.mkdir(destination, { recursive: true });
+const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+const file = resolve(destination, `whistlezim-${stamp}.dump.wzb`);
+const salt = randomBytes(16); const nonce = randomBytes(12); const key = scryptSync(process.env.BACKUP_PASSPHRASE, salt, 32); const cipher = createCipheriv("aes-256-gcm", key, nonce);
+const output = createWriteStream(file, { flags: "wx", mode: 0o600 }); output.write(Buffer.concat([Buffer.from("WZBKP001"), salt, nonce]));
+const dump = spawn("pg_dump", ["--format=custom", "--no-owner", process.env.DATABASE_URL], { stdio: ["ignore", "pipe", "inherit"], windowsHide: true }); dump.stdout.pipe(cipher).pipe(output, { end: false });
+await Promise.all([new Promise((accept, reject) => { dump.on("error", reject); dump.on("close", (code) => code === 0 ? accept() : reject(new Error(`pg_dump failed with code ${code}`))); }), new Promise((accept, reject) => { cipher.on("end", accept); cipher.on("error", reject); output.on("error", reject); })]);
+await new Promise((accept, reject) => { output.write(cipher.getAuthTag()); output.end(); output.on("close", accept); output.on("error", reject); });
+const hash = createHash("sha256"); await new Promise((accept, reject) => { const input = createReadStream(file); input.on("data", (chunk) => hash.update(chunk)); input.on("end", accept); input.on("error", reject); });
+const manifest = { format: "whistlezim-backup-manifest-v1", file: basename(file), sha256: hash.digest("hex"), bytes: (await fs.stat(file)).size, createdAt: new Date().toISOString(), encryption: "AES-256-GCM", kdf: "scrypt", includes: ["PostgreSQL schema", "PostgreSQL data"] };
+await fs.writeFile(`${file}.manifest.json`, `${JSON.stringify(manifest, null, 2)}\n`, { mode: 0o600, flag: "wx" });
+console.log(JSON.stringify(manifest));

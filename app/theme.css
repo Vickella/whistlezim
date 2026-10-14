@@ -8,3 +8,7 @@ nav.card { margin: 0 0 2rem; box-shadow: none; background: #fff; position: stick
 nav.card a { color: var(--brand); font-weight: 700; }
 .grid > * { min-width: 0; }
 .prewrap { white-space: pre-wrap; overflow-wrap: anywhere; }
+.mfa-card { max-width: 34rem; }
+.mfa-setup { display: grid; justify-items: start; gap: .65rem; }
+.mfa-qr { width: min(15rem, 100%); height: auto; border: 1px solid var(--line); border-radius: .5rem; }
+.mfa-setup .secret { max-width: 100%; font-size: .9rem; }

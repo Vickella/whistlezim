@@ -1,0 +1,2 @@
+import { TrustPage } from "@/components/legal/TrustPage";
+export default function Page() { return <TrustPage title="Cookie notice"><p><strong>Review status:</strong> counsel review required before real intake.</p><p>WhistleZim uses only strictly necessary authentication, MFA, and reporter session cookies. No advertising or analytics cookies are added by the application. Hosting and network providers may process request metadata as described in the final provider assessment.</p></TrustPage>; }
