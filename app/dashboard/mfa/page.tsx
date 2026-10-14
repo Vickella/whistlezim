@@ -1,0 +1,1 @@
+export default function Page(){return <section className="prose"><h1>MFA is required</h1><div className="notice">Case data remains inaccessible until a verified TOTP factor reaches assurance level 2. Enrolment requires the configured Supabase Auth MFA flow.</div></section>}

@@ -1,0 +1,2 @@
+import { NextRequest,NextResponse } from "next/server"; import { hasValidOrigin } from "@/lib/security/csrf";
+export async function POST(req:NextRequest){if(!hasValidOrigin(req))return NextResponse.json({error:"Invalid origin"},{status:403});const r=NextResponse.redirect(new URL("/",req.url),303);r.cookies.set("wz_reporter_session","",{httpOnly:true,secure:process.env.NODE_ENV==="production",sameSite:"strict",path:"/track",maxAge:0});return r}

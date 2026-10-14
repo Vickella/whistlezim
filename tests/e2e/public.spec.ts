@@ -1,0 +1,3 @@
+import { test,expect } from "@playwright/test";
+test("demo is candid and intake is closed",async({page})=>{await page.goto("/");await expect(page.getByRole("status")).toContainText("Demonstration mode");await page.goto("/status");await expect(page.getByText("Closed")).toBeVisible()});
+test("tracking form is keyboard accessible",async({page})=>{await page.goto("/track");await page.keyboard.press("Tab");await expect(page.locator(":focus")).toBeVisible();await expect(page.getByLabel("Case reference")).toBeVisible();await expect(page.getByLabel("Recovery secret")).toHaveAttribute("type","password")});

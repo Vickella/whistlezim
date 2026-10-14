@@ -1,0 +1,4 @@
+export type Role = "org_owner" | "case_manager" | "case_officer" | "independent_reviewer" | "auditor_readonly" | "platform_operator";
+export type Action = "manage_org" | "manage_team" | "read_case" | "write_case" | "read_audit" | "export_case";
+const matrix: Record<Role, readonly Action[]> = { org_owner: ["manage_org", "manage_team", "read_audit"], case_manager: ["read_case", "write_case", "read_audit", "export_case"], case_officer: ["read_case", "write_case"], independent_reviewer: ["read_case", "write_case", "read_audit"], auditor_readonly: ["read_audit"], platform_operator: [] };
+export function authorize(role: Role, action: Action, hasCaseGrant = false, restricted = false) { if ((action === "read_case" || action === "write_case" || action === "export_case") && !hasCaseGrant) return false; if (restricted && role !== "independent_reviewer") return false; return matrix[role].includes(action); }

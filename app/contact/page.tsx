@@ -1,0 +1,1 @@
+import { TrustPage } from "@/components/legal/TrustPage"; import { getConfig } from "@/lib/config"; export default function Page(){const c=getConfig();return <TrustPage title="Contact"><p>Security: {c.SECURITY_CONTACT_EMAIL}</p><p>Privacy: {c.PRIVACY_CONTACT_EMAIL}</p><p>Do not send report content or recovery secrets by ordinary email.</p></TrustPage>}

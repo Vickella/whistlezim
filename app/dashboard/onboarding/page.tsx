@@ -1,0 +1,1 @@
+export default function Page(){return <section className="prose"><h1>Organisation onboarding</h1><div className="notice">An operator must verify organisation control and provision the initial owner through the reviewed administration process. This build does not permit an organisation to verify itself or create an automatic public channel.</div></section>}

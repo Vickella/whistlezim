@@ -1,0 +1,2 @@
+import { redirect } from "next/navigation"; import { authClient } from "./server";
+export async function requireOfficer(){const db=await authClient();const {data:{user}}=await db.auth.getUser();if(!user)redirect("/login");const {data:aal}=await db.auth.mfa.getAuthenticatorAssuranceLevel();if(aal?.currentLevel!=="aal2")redirect("/dashboard/mfa");const {data:member}=await db.from("organization_members").select("organization_id,role,active").eq("user_id",user.id).eq("active",true).maybeSingle();if(!member)redirect("/dashboard/onboarding");return {db,user,member}}

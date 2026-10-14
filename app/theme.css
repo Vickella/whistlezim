@@ -1,0 +1,10 @@
+.card { min-width: 0; overflow: hidden; box-shadow: 0 8px 28px rgba(15, 45, 37, .06); transition: border-color .2s, transform .2s; }
+.card:hover { border-color: #b3c2ba; }
+.icon-label { display: flex; align-items: center; gap: .65rem; line-height: 1.25; }
+.icon { width: 1.35rem; height: 1.35rem; flex: 0 0 1.35rem; color: var(--brand); }
+.metric { font-size: 2.25rem; font-weight: 800; line-height: 1; margin: .8rem 0 0; }
+.card p:last-child { margin-bottom: 0; }
+nav.card { margin: 0 0 2rem; box-shadow: none; background: #fff; position: sticky; top: .5rem; z-index: 2; }
+nav.card a { color: var(--brand); font-weight: 700; }
+.grid > * { min-width: 0; }
+.prewrap { white-space: pre-wrap; overflow-wrap: anywhere; }
