@@ -3,6 +3,8 @@ import { authClient } from "@/lib/auth/server";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
+  const requestedNext = request.nextUrl.searchParams.get("next");
+  const next = requestedNext?.startsWith("/dashboard") && !requestedNext.startsWith("//") ? requestedNext : "/dashboard";
   if (!code) return NextResponse.redirect(new URL("/login?error=invalid_link", request.url));
   try {
     const client = await authClient();
@@ -11,5 +13,5 @@ export async function GET(request: NextRequest) {
   } catch {
     return NextResponse.redirect(new URL("/login?error=unavailable", request.url));
   }
-  return NextResponse.redirect(new URL("/dashboard", request.url));
+  return NextResponse.redirect(new URL(next, request.url));
 }

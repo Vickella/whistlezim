@@ -15,3 +15,11 @@ test("tracking form is keyboard accessible",async({page})=>{
   await expect(page.getByLabel("Case reference")).toBeVisible();
   await expect(page.getByLabel("Recovery secret")).toHaveAttribute("type","password");
 });
+
+test("organisation signup explains the secure setup flow",async({page})=>{
+  await page.goto("/register");
+  await expect(page.getByRole("heading",{name:"Create your workspace"})).toBeVisible();
+  await expect(page.getByLabel("Work email")).toBeVisible();
+  await expect(page.getByRole("button",{name:"Create secure account"})).toBeVisible();
+  await expect(page.getByText("Verify and protect access")).toBeVisible();
+});

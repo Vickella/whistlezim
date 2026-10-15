@@ -1,5 +1,6 @@
 import { AuthForm } from "@/components/auth/AuthForm";
 import { getConfig } from "@/lib/config";
+import Link from "next/link";
 
 export default function Page() {
   const config = getConfig();
@@ -9,6 +10,7 @@ export default function Page() {
       <h1 id="login-title">Welcome back</h1>
       <p className="auth-lead">Sign in to review assigned reports, communicate with reporters and manage case activity.</p>
       <AuthForm url={config.NEXT_PUBLIC_SUPABASE_URL} keyValue={config.NEXT_PUBLIC_SUPABASE_ANON_KEY} />
+      <p className="auth-new">Setting up WhistleZim for your organisation? <Link href="/register">Create an organisation workspace</Link>.</p>
       <p className="auth-help">Access is limited to authorised organisation officers. Multi factor authentication is required before case information can be viewed.</p>
     </section>
     <aside className="auth-aside">

@@ -6,7 +6,7 @@ Implemented: architecture, threat model, data model migration, initial role matr
 
 ## M1 — foundation
 
-Implemented: Next.js strict TypeScript, accessible responsive UI, hosted passwordless Auth, TOTP enrolment and challenge, database enforced AAL2 access, organisations/members/categories schema, dual operator organisation verification, RLS, CI and demo gating. Pending: deployed Supabase integration evidence and operator interface polish.
+Implemented: Next.js strict TypeScript, accessible responsive UI, verified email and password signup, TOTP enrolment and challenge, database enforced AAL2 access, secure self service organisation creation, owner and invited officer journeys, organisations/members/categories schema, dual operator organisation verification, RLS, CI and release gating. Pending: deployed Supabase integration evidence and operator verification interface polish.
 
 ## M2 — reporter flow
 
@@ -33,4 +33,12 @@ Blocked by every unchecked item in `release-checklist.md`. `APP_MODE=demo`, `INT
 - Production dependency audit: zero known vulnerabilities.
 - Runtime smoke: homepage and tracking returned 200; demo health reported intake closed.
 - Runtime headers: nonce CSP, no-referrer, nosniff, frame denial, permissions policy, cross-origin isolation headers and HSTS present; sensitive tracking route was `private, no-store` and `noindex`.
-- Not run: live Supabase integration, browser E2E, independent penetration test, legal/provider review and backup restore drill. These remain release blockers.
+- Not run: live Supabase integration, full case workflow browser E2E, independent penetration test, legal/provider review and backup restore drill. These remain release blockers.
+
+## Verification record — 2026-10-15
+
+- ESLint and TypeScript strict checks passed.
+- Unit and security tests: 19/19 passed.
+- Next.js production build passed with the self service registration route.
+- Public browser tests: 6/6 passed across desktop Chromium and a mobile viewport, including the organisation signup journey.
+- Live Supabase signup, SMTP delivery, organisation RPC integration and invited officer acceptance still require synthetic production testing after the migration and Auth settings are applied.

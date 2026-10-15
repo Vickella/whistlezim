@@ -43,6 +43,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <div>
           <h2>Organisation</h2>
           <div className="footer-column">
+            <Link href="/register">Create organisation</Link>
             <Link href="/login">Officer portal</Link>
             <Link href="/contact">Contact</Link>
             <Link href="/accessibility">Accessibility</Link>

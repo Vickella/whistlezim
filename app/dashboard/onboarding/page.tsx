@@ -1,1 +1,22 @@
-export default function Page(){return <section className="prose"><p className="eyebrow dark">Account setup</p><h1>Organisation access is being prepared</h1><p>Your officer account is active but has not yet been linked to an organisation. Contact the platform administrator responsible for your organisation to complete access.</p><p>You will return here automatically after signing in once your membership is active.</p></section>}
+import { redirect } from "next/navigation";
+import { OrganizationSetupForm } from "@/components/auth/OrganizationSetupForm";
+import { authClient } from "@/lib/auth/server";
+
+export default async function Page() {
+  const db = await authClient();
+  const [{ data: auth }, { data: assurance }] = await Promise.all([
+    db.auth.getUser(),
+    db.auth.mfa.getAuthenticatorAssuranceLevel()
+  ]);
+  if (!auth.user) redirect("/login");
+  if (assurance?.currentLevel !== "aal2") redirect("/dashboard/mfa");
+  const { data: member } = await db.from("organization_members").select("organization_id").eq("user_id", auth.user.id).eq("active", true).limit(1).maybeSingle();
+  if (member) redirect("/dashboard");
+
+  return <section className="onboarding-page prose">
+    <p className="eyebrow dark">Final setup step</p>
+    <h1>Create your organisation workspace</h1>
+    <p>Your account is verified and protected. Add the organisation details used by your case team and reporting channel.</p>
+    <OrganizationSetupForm />
+  </section>;
+}

@@ -44,7 +44,7 @@ export default function Home() {
     <section className="workflow-band">
       <div className="wrap workflow-content">
         <div><p className="eyebrow">For reporting officers</p><h2>One place to manage every concern</h2><p>Review assigned cases, record decisions, manage access and maintain an accountable case history.</p></div>
-        <Link className="button light" href="/login">Open officer portal</Link>
+        <div className="actions workflow-actions"><Link className="button light" href="/register">Create organisation</Link><Link className="button secondary" href="/login">Officer sign in</Link></div>
       </div>
     </section>
     <section className="wrap safety-note" aria-label="Safety information">
