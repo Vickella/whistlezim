@@ -1,2 +1,55 @@
-import Link from "next/link"; import { Icon } from "@/components/ui/Icon";
-export default function Home() { return <><section className="hero"><div><p className="eyebrow">Speak up safely</p><h1>A careful channel for concerns that matter.</h1><p>WhistleZim helps organisations receive, investigate and respond to reports while minimising data and controlling access. It cannot guarantee absolute anonymity.</p><div className="actions"><Link className="button" href="/how-it-works">Submit a report</Link><Link className="button secondary" href="/register">Create an organisation</Link></div></div></section><section className="wrap section"><h2>Designed around reporter safety</h2><div className="grid"><article className="card"><h3 className="icon-label"><Icon name="shield"/>Choose a verified channel</h3><p>Use the organisation’s reporting page and read its controller notice.</p></article><article className="card"><h3 className="icon-label"><Icon name="key"/>Keep the secret</h3><p>Receive a random reference and separate recovery secret. We show the secret once.</p></article><article className="card"><h3 className="icon-label"><Icon name="conversation"/>Continue securely</h3><p>Return without an account to see permitted updates and exchange messages.</p></article></div></section><section className="wrap"><div className="notice"><strong>Know the limits.</strong> WhistleZim is not an emergency service. Network providers, devices, documents and the words in a report may identify a person. Use an appropriate emergency authority if anyone is in immediate danger.</div></section></>; }
+import Link from "next/link";
+import { Icon } from "@/components/ui/Icon";
+
+export default function Home() {
+  return <>
+    <section className="hero">
+      <div className="hero-content">
+        <p className="eyebrow">Confidential reporting</p>
+        <h1>Speak up.<br />Stay in control.</h1>
+        <p className="hero-lead">Submit a concern through your organisation’s secure channel, then return for updates without creating an account.</p>
+        <div className="actions">
+          <Link className="button" href="/report">Submit a report</Link>
+          <Link className="button secondary" href="/track">Track a report</Link>
+        </div>
+        <p className="hero-note">Your name and contact details are optional when anonymous reporting is available.</p>
+      </div>
+      <div className="hero-visual" aria-hidden="true">
+        <div className="signal signal-one" />
+        <div className="signal signal-two" />
+        <div className="shield-mark">W</div>
+      </div>
+    </section>
+    <section className="wrap section product-section">
+      <div className="section-heading">
+        <p className="eyebrow dark">A protected reporting journey</p>
+        <h2>From first report to final outcome</h2>
+        <p>WhistleZim keeps communication open while limiting access to authorised case teams.</p>
+      </div>
+      <div className="grid feature-grid">
+        <article className="card feature-card">
+          <span className="icon-shell"><Icon name="shield" /></span>
+          <div><h3>Report confidentially</h3><p>Choose anonymous or confidential reporting and share only what is relevant to the concern.</p></div>
+        </article>
+        <article className="card feature-card">
+          <span className="icon-shell"><Icon name="key" /></span>
+          <div><h3>Keep private access</h3><p>Receive a unique case reference and recovery secret for future access.</p></div>
+        </article>
+        <article className="card feature-card">
+          <span className="icon-shell"><Icon name="conversation" /></span>
+          <div><h3>Continue the conversation</h3><p>Read updates and respond to the case team through the protected case channel.</p></div>
+        </article>
+      </div>
+    </section>
+    <section className="workflow-band">
+      <div className="wrap workflow-content">
+        <div><p className="eyebrow">For reporting officers</p><h2>One place to manage every concern</h2><p>Review assigned cases, record decisions, manage access and maintain an accountable case history.</p></div>
+        <Link className="button light" href="/login">Open officer portal</Link>
+      </div>
+    </section>
+    <section className="wrap safety-note" aria-label="Safety information">
+      <strong>Immediate danger?</strong>
+      <span>Contact the appropriate emergency service. WhistleZim is intended for reporting and case communication.</span>
+    </section>
+  </>;
+}

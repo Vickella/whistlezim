@@ -1,1 +1,5 @@
-import { AuthForm } from "@/components/auth/AuthForm"; import { getConfig } from "@/lib/config"; export default function Page(){const c=getConfig();return <div className="wrap section prose"><h1>Create an organisation</h1><p>Registration starts a governance review. It does not create a public or verified reporting channel. Organisation control, an independent handler, privacy notice, escalation path and retention schedule must be reviewed.</p><AuthForm mode="register" url={c.NEXT_PUBLIC_SUPABASE_URL} keyValue={c.NEXT_PUBLIC_SUPABASE_ANON_KEY}/></div>}
+import { redirect } from "next/navigation";
+
+export default function Page() {
+  redirect("/login");
+}

@@ -1,6 +1,6 @@
 # WHISTLEZIM — FREE EDITION
 ## Complete Product Requirements, Security Architecture, Privacy Governance & Coding-Agent Implementation Specification
-**Version:** 1.0 | **Date:** 14 October 2026 | **Owner:** VerityCore Consultancy (Pvt) Ltd
+**Version:** 1.0 | **Date:** 14 October 2026 | **Owner:** WhistleZim
 **Status:** Engineering specification; NOT a declaration of regulatory compliance or authorisation to process real whistleblower data.
 
 > **CODING AGENT MASTER INSTRUCTION:** Build a complete, functioning, tested, accessible, privacy-first, open-source whistleblowing platform. Do not ship placeholders, fake security assurances, mocked production workflows, or claims of legal compliance. Follow the acceptance criteria and release gates below. If a requirement cannot be safely implemented within free hosting limits, implement a safe, documented alternative or block live sensitive-data collection. Never silently weaken a security requirement to achieve zero cost.
@@ -9,7 +9,7 @@
 
 # 0. Critical operating constraints and non-negotiable truths
 
-1. **Vercel Hobby is for personal/non-commercial use only.** A free public-interest project may still need legal/terms review; free-to-users does NOT automatically mean non-commercial. A VerityCore-branded hosted service that advertises or advances paid services may be commercial. Do not represent Hobby as approved for commercial production. Architect for Vercel deployment, but gate production use on the provider's permitted use or a compliant alternative hosting arrangement.
+1. **Vercel Hobby is for personal/non-commercial use only.** A free public-interest project may still need legal/terms review; free-to-users does NOT automatically mean non-commercial. A hosted service that advertises or advances paid services may be commercial. Do not represent Hobby as approved for commercial production. Architect for Vercel deployment, but gate production use on the provider's permitted use or a compliant alternative hosting arrangement.
 2. **No free-tier SLA or guaranteed permanence.** Vercel quotas and Supabase free-tier quotas, inactivity pausing, storage and database limits may interrupt service. The application must be portable and expose health/capacity warnings.
 3. **No managed automatic backups on Supabase Free.** A documented, encrypted, tested independent backup/restore mechanism and responsible operator are required before receiving real reports. Never export decrypted reports to CI artifacts or public storage. No unsupported promise of zero-loss recovery.
 4. **Do not promise absolute anonymity.** Application design can avoid collecting names/emails, but infrastructure/network logs, browser environments, content and attachment metadata may still identify a person.
