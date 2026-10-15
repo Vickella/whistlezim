@@ -24,6 +24,8 @@ test("organisation signup explains the secure setup flow",async({page})=>{
   await expect(page.getByText("Verify and protect access")).toBeVisible();
   await expect(page.locator("form.auth-form")).toHaveAttribute("method","post");
   await expect(page.locator("form.auth-form")).toHaveAttribute("action","/auth/signup");
+  const signupWidth = await page.locator(".signup-page").evaluate((element)=>element.getBoundingClientRect().width);
+  expect(signupWidth).toBeLessThanOrEqual(1040);
 });
 
 test("signup passwords can be viewed without leaking into the URL",async({page})=>{

@@ -6,7 +6,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { PasswordInput } from "./PasswordInput";
 import { signupFailure, signupMessages } from "@/lib/auth/signup-error";
 
-export function SignupForm({ url, keyValue, initialSent = false, initialStatus = "" }: { url?: string; keyValue?: string; initialSent?: boolean; initialStatus?: string }) {
+export function SignupForm({ appUrl, url, keyValue, initialSent = false, initialStatus = "" }: { appUrl?: string; url?: string; keyValue?: string; initialSent?: boolean; initialStatus?: string }) {
   const client = useMemo(() => url && keyValue ? createBrowserClient(url, keyValue) : null, [url, keyValue]);
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(initialSent);
@@ -33,7 +33,7 @@ export function SignupForm({ url, keyValue, initialSent = false, initialStatus =
       const { data, error } = await client.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: `${location.origin}/auth/callback?next=/dashboard/mfa` }
+        options: { emailRedirectTo: `${(appUrl ?? location.origin).replace(/\/$/, "")}/auth/callback?next=/dashboard/mfa` }
       });
       if (error) {
         setStatus(signupMessages[signupFailure(error)]);

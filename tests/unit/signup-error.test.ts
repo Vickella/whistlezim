@@ -9,6 +9,10 @@ describe("signup error handling",()=>{
   it("identifies SMTP delivery failures without exposing provider internals",()=>{
     expect(signupFailure({code:"unexpected_failure",message:"Error sending confirmation email",status:500})).toBe("email_delivery");
   });
+  it("explains when the restricted default mailer rejects public addresses",()=>{
+    expect(signupFailure({code:"email_address_not_authorized",message:"Email address not authorized"})).toBe("restricted_email");
+    expect(signupMessages.restricted_email).toContain("Custom SMTP");
+  });
   it("keeps unknown provider failures generic",()=>{
     expect(signupFailure({code:"unknown_provider_error",message:"internal detail"})).toBe("failed");
   });

@@ -19,7 +19,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
       <p className="eyebrow dark">Organisation setup</p>
       <h1 id="signup-title">Create your workspace</h1>
       <p className="auth-lead">Start with your work email. Email verification and multi factor authentication protect the organisation workspace from the first sign in.</p>
-      <SignupForm url={config.NEXT_PUBLIC_SUPABASE_URL} keyValue={config.NEXT_PUBLIC_SUPABASE_ANON_KEY} initialSent={sent} initialStatus={status} />
+      <SignupForm appUrl={config.NEXT_PUBLIC_APP_URL} url={config.NEXT_PUBLIC_SUPABASE_URL} keyValue={config.NEXT_PUBLIC_SUPABASE_ANON_KEY} initialSent={sent} initialStatus={status} />
       <p className="auth-help">Already have access? <Link href="/login">Sign in to the officer portal</Link>.</p>
     </section>
     <aside className="auth-aside signup-aside" aria-label="Setup steps">

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { authClient } from "@/lib/auth/server";
 import { hasValidOrigin } from "@/lib/security/csrf";
 import { signupFailure } from "@/lib/auth/signup-error";
+import { getConfig } from "@/lib/config";
 
 const signupSchema = z.object({
   email: z.string().trim().email().max(320).transform((value) => value.toLowerCase()),
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const client = await authClient();
-    const callback = new URL("/auth/callback?next=/dashboard/mfa", request.url).toString();
+    const callback = new URL("/auth/callback?next=/dashboard/mfa", getConfig().NEXT_PUBLIC_APP_URL ?? request.url).toString();
     const { data, error } = await client.auth.signUp({ email: input.data.email, password: input.data.password, options: { emailRedirectTo: callback } });
     if (error) return registerRedirect(request, `error=${signupFailure(error)}`);
     if (data.session) return NextResponse.redirect(new URL("/dashboard/mfa", request.url), 303);

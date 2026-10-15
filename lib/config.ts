@@ -17,6 +17,7 @@ const schema = z.object({
   BACKUP_RESTORE_EVIDENCE_SHA256: z.string().regex(/^[a-f0-9]{64}$/i).optional(),
   HOSTING_APPROVAL_REFERENCE: z.string().min(8).optional(),
   OWNER_LAUNCH_APPROVAL_REFERENCE: z.string().min(8).optional(),
+  NEXT_PUBLIC_APP_URL: z.string().url().optional(),
   NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
