@@ -4,6 +4,7 @@ import Link from "next/link";
 import { createBrowserClient } from "@supabase/ssr";
 import { FormEvent, useMemo, useState } from "react";
 import { PasswordInput } from "./PasswordInput";
+import { signupFailure, signupMessages } from "@/lib/auth/signup-error";
 
 export function SignupForm({ url, keyValue, initialSent = false, initialStatus = "" }: { url?: string; keyValue?: string; initialSent?: boolean; initialStatus?: string }) {
   const client = useMemo(() => url && keyValue ? createBrowserClient(url, keyValue) : null, [url, keyValue]);
@@ -35,9 +36,7 @@ export function SignupForm({ url, keyValue, initialSent = false, initialStatus =
         options: { emailRedirectTo: `${location.origin}/auth/callback?next=/dashboard/mfa` }
       });
       if (error) {
-        setStatus(error.message.toLowerCase().includes("password")
-          ? "Use a stronger password with at least 12 characters."
-          : "The account could not be created. Check your details and try again.");
+        setStatus(signupMessages[signupFailure(error)]);
         return;
       }
       if (data.session) {
@@ -68,7 +67,7 @@ export function SignupForm({ url, keyValue, initialSent = false, initialStatus =
     <PasswordInput id="signup-password-confirmation" name="passwordConfirmation" label="Confirm password" autoComplete="new-password" minLength={12} maxLength={128} />
     <label className="consent-row">
       <input name="terms" type="checkbox" required />
-      <span>I agree to the <Link href="/terms">terms</Link> and confirm I am authorised to create this organisation workspace.</span>
+      <span>I agree to the <Link href="/terms">Terms of Service</Link>, acknowledge the <Link href="/privacy">Privacy Notice</Link> and confirm I am authorised to create this organisation workspace.</span>
     </label>
     <button className="button full-button" disabled={busy} type="submit">{busy ? "Creating account…" : "Create secure account"}</button>
     {status && <p className="form-status" role="status">{status}</p>}

@@ -64,3 +64,13 @@ test("production CSP nonce is attached to application scripts",async({request})=
   expect(scriptNonce).toBe(policyNonce);
   expect(response.headers()["cache-control"]).toContain("no-store");
 });
+
+test("legal centre provides structured policy navigation",async({page})=>{
+  await page.goto("/legal");
+  await expect(page.getByRole("heading",{name:"Legal centre"})).toBeVisible();
+  await expect(page.getByRole("link",{name:/Privacy Notice/})).toBeVisible();
+  await page.goto("/privacy");
+  await expect(page.getByRole("navigation",{name:"Privacy Notice contents"})).toBeVisible();
+  await expect(page.getByRole("heading",{name:/Anonymous reporting and pseudonymisation/})).toBeVisible();
+  await expect(page.getByText("Version 1.1")).toBeVisible();
+});

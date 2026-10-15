@@ -1,20 +1,19 @@
 import Link from "next/link";
 import { SignupForm } from "@/components/auth/SignupForm";
 import { getConfig } from "@/lib/config";
+import { signupMessages } from "@/lib/auth/signup-error";
 
 const errors: Record<string, string> = {
   request_denied: "The signup request was denied. Refresh the page and try again.",
   invalid_details: "Check every field and use matching passwords with at least 12 characters.",
-  weak_password: "Use a stronger password with at least 12 characters.",
-  signup_failed: "The account could not be created. Check your details and try again.",
-  unavailable: "The signup service is temporarily unavailable. Try again shortly."
+  ...signupMessages
 };
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ state?: string; error?: string }> }) {
   const config = getConfig();
   const query = await searchParams;
   const sent = query.state === "check_email";
-  const status = sent ? "Check your email and open the verification link to continue." : query.error ? errors[query.error] ?? errors.signup_failed : "";
+  const status = sent ? "Check your email and open the verification link to continue." : query.error ? errors[query.error] ?? signupMessages.failed : "";
   return <div className="auth-page signup-page">
     <section className="auth-panel" aria-labelledby="signup-title">
       <p className="eyebrow dark">Organisation setup</p>

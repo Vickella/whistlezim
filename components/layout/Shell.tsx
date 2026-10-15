@@ -53,6 +53,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <div className="wrap footer-bottom">
         <span>© {new Date().getFullYear()} WhistleZim</span>
         <div className="footer-legal">
+          <Link href="/legal">Legal centre</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/acceptable-use">Acceptable use</Link>
           <Link href="/cookies">Cookies</Link>
