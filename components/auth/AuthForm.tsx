@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
+import { PasswordInput } from "./PasswordInput";
 
 export function AuthForm({ url, keyValue }: { url?: string; keyValue?: string }) {
   const [status, setStatus] = useState("");
@@ -51,10 +52,7 @@ export function AuthForm({ url, keyValue }: { url?: string; keyValue?: string })
       <label htmlFor="email">Work email</label>
       <input required type="email" autoComplete="username" name="email" id="email" />
     </div>
-    <div className="field">
-      <label htmlFor="password">Password</label>
-      <input required minLength={8} type="password" autoComplete="current-password" name="password" id="password" />
-    </div>
+    <PasswordInput id="password" name="password" label="Password" autoComplete="current-password" minLength={8} />
     <button className="button full-button" disabled={busy} type="submit">{busy ? "Signing in…" : "Sign in securely"}</button>
     <div className="auth-divider"><span>or</span></div>
     <button className="button quiet full-button" disabled={busy} type="button" onClick={sendLink}>Email me a secure sign in link</button>

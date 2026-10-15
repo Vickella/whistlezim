@@ -26,6 +26,9 @@ export async function POST(request: NextRequest) {
     p_slug: input.data.slug
   });
   if (error || !data) {
+    if (error?.code === "PGRST202" || error?.code === "42883") {
+      return NextResponse.json({ error: "Organisation setup is not available yet. Ask the platform administrator to apply the latest database migration." }, { status: 503 });
+    }
     return NextResponse.json({ error: "That reporting address is unavailable or this account already has a workspace." }, { status: 409 });
   }
   return NextResponse.json({ organizationId: data }, { status: 201, headers: { "Cache-Control": "no-store" } });
