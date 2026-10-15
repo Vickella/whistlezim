@@ -10,8 +10,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <span>WhistleZim</span>
         </Link>
         <div className="nav-links">
-          <Link href="/report">Submit report</Link>
-          <Link href="/track">Track report</Link>
+          <Link className="nav-submit" href="/report">Submit report</Link>
+          <Link className="nav-track" href="/track">Track report</Link>
           <Link className="nav-login" href="/login">Officer portal</Link>
         </div>
       </nav>

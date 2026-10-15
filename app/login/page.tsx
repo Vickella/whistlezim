@@ -12,8 +12,7 @@ export default function Page() {
       <p className="auth-help">Access is limited to authorised organisation officers. Multi factor authentication is required before case information can be viewed.</p>
     </section>
     <aside className="auth-aside">
-      <span className="auth-lock" aria-hidden="true">◇</span>
-      <h2>Protected case access</h2>
+      <div className="auth-aside-title"><span className="auth-lock" aria-hidden="true">◇</span><h2>Protected case access</h2></div>
       <p>Officer sessions use organisation membership, multi factor authentication and explicit case permissions.</p>
     </aside>
   </div>;

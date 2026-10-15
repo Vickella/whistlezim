@@ -1,1 +1,1 @@
-import { DashboardNav } from "@/components/layout/DashboardNav"; export const dynamic="force-dynamic"; export default function Layout({children}:{children:React.ReactNode}){return <div className="wrap section"><DashboardNav/>{children}</div>}
+import { DashboardNav } from "@/components/layout/DashboardNav"; export const dynamic="force-dynamic"; export default function Layout({children}:{children:React.ReactNode}){return <div className="wrap section dashboard-shell"><DashboardNav/>{children}</div>}
