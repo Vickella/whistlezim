@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SignupForm } from "@/components/auth/SignupForm";
 import { getConfig } from "@/lib/config";
 import { signupMessages } from "@/lib/auth/signup-error";
+import { publicAppUrl } from "@/lib/auth/public-url";
 
 const errors: Record<string, string> = {
   request_denied: "The signup request was denied. Refresh the page and try again.",
@@ -12,6 +13,7 @@ const errors: Record<string, string> = {
 export default async function Page({ searchParams }: { searchParams: Promise<{ state?: string; error?: string }> }) {
   const config = getConfig();
   const query = await searchParams;
+  const appUrl = publicAppUrl(config.NEXT_PUBLIC_APP_URL, process.env.VERCEL_PROJECT_PRODUCTION_URL);
   const sent = query.state === "check_email";
   const status = sent ? "Check your email and open the verification link to continue." : query.error ? errors[query.error] ?? signupMessages.failed : "";
   return <div className="auth-page signup-page">
@@ -19,7 +21,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
       <p className="eyebrow dark">Organisation setup</p>
       <h1 id="signup-title">Create your workspace</h1>
       <p className="auth-lead">Start with your work email. Email verification and multi factor authentication protect the organisation workspace from the first sign in.</p>
-      <SignupForm appUrl={config.NEXT_PUBLIC_APP_URL} url={config.NEXT_PUBLIC_SUPABASE_URL} keyValue={config.NEXT_PUBLIC_SUPABASE_ANON_KEY} initialSent={sent} initialStatus={status} />
+      <SignupForm appUrl={appUrl} url={config.NEXT_PUBLIC_SUPABASE_URL} keyValue={config.NEXT_PUBLIC_SUPABASE_ANON_KEY} initialSent={sent} initialStatus={status} />
       <p className="auth-help">Already have access? <Link href="/login">Sign in to the officer portal</Link>.</p>
     </section>
     <aside className="auth-aside signup-aside" aria-label="Setup steps">
